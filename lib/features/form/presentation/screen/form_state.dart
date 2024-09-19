@@ -38,6 +38,6 @@ abstract class FormProductState<T extends FormScreen> extends State<T> {
       categoryName: categoryController.text,
       description: descController.text,
       harga: priceController.text.numberOnly.toInt()
-    ), widget.data == null);
+    ), (widget.data?.productId??'').isNotEmpty);
   }
 }
