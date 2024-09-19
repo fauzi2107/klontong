@@ -1,16 +1,17 @@
 import 'package:klontong/core/ext/string_ext.dart';
-import 'package:klontong/features/form/index.dart';
 
 import '../../../../ui_export.dart';
 
 class ListItemWidget extends StatelessWidget {
   const ListItemWidget({super.key,
     required this.products,
-    required this.isLoading
+    required this.isLoading,
+    required this.onRefresh
   });
 
   final List<ProductModel> products;
   final bool isLoading;
+  final Function() onRefresh;
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +34,12 @@ class ListItemWidget extends StatelessWidget {
       itemBuilder: (ctx, i) {
         final item = products[i];
         return MaterialButton(
-          onPressed: () {
-            pushNamedTo(context, routeName: FormScreen.routeName,
+          onPressed: () async {
+            await pushNamedTo(context, routeName: FormScreen.routeName,
               arguments: {
                 'product': item
               }
-            );
+            ).then((value) => onRefresh());
           },
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8)

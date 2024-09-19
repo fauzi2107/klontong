@@ -1,4 +1,5 @@
 import 'package:klontong/core/ext/string_ext.dart';
+import 'package:klontong/core/formatter/money_formatter.dart';
 import 'package:klontong/core/widgets/my_dialog.dart';
 import 'package:klontong/features/form/presentation/bloc/form_cubit.dart';
 import 'package:klontong/features/home/domain/usecase/add_product_usecase.dart';
@@ -100,6 +101,10 @@ class _FormScreenState extends FormProductState<FormScreen> {
                             controller: priceController,
                             readOnly: isReadOnly,
                             margin: const EdgeInsets.only(bottom: 12),
+                            inputType: TextInputType.number,
+                            inputFormatters: [
+                              MoneyFormatter(isUseSymbol: true)
+                            ],
                           ),
                           MyField(
                             label: 'Description',

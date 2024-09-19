@@ -6,4 +6,8 @@ abstract class HomeState<T extends HomeScreen> extends State<T> {
   onSearch(BuildContext context) {
     context.read<ProductCubit>().getProductByName(searchController.text);
   }
+
+  onRefresh(BuildContext context) {
+    context.read<ProductCubit>().getProducts();
+  }
 }
