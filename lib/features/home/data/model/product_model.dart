@@ -3,26 +3,26 @@ class ProductModel {
   final String categoryName, sku, name, description, image, productId;
 
   ProductModel({
-    required this.id,
+    this.id = 86,
     required this.productId,
-    required this.categoryId,
-    required this.weight,
-    required this.width,
-    required this.length,
-    required this.height,
+    this.categoryId = 14,
+    this.weight = 5,
+    this.width = 5,
+    this.length = 5,
+    this.height = 5,
     required this.harga,
     required this.categoryName,
-    required this.sku,
+    this.sku = 'MHZVTK',
     required this.name,
     required this.description,
-    required this.image
+    this.image = ''
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['id'],
+      id: json['id'] ?? 0,
       productId: json['_id'] ?? '',
-      categoryId: json['categoryId'],
+      categoryId: json['CategoryId'],
       categoryName: json['categoryName'],
       sku: json['sku'],
       name: json['name'],
@@ -68,7 +68,7 @@ class ProductModel {
 
   Map<String, dynamic> get toJson => {
     'id': id,
-    'categoryId': categoryId,
+    'CategoryId': categoryId,
     'categoryName': categoryName,
     'sku': sku,
     'name': name,
@@ -83,7 +83,7 @@ class ProductModel {
 
   static Map<String, dynamic> get dummyJson => {
     "id": 86,
-    "categoryId": 14,
+    "CategoryId": 14,
     "categoryName": "Cemilan",
     "sku": "MHZVTK",
     "name": "Ciki ciki",

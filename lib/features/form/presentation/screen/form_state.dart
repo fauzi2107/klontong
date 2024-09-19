@@ -30,4 +30,14 @@ abstract class FormProductState<T extends FormScreen> extends State<T> {
     }
     return 'New Product';
   }
+
+  onSubmit(BuildContext context) async {
+    context.read<FormCubit>().onSubmit(ProductModel(
+      productId: '',
+      name: nameController.text,
+      categoryName: categoryController.text,
+      description: descController.text,
+      harga: priceController.text.numberOnly.toInt()
+    ));
+  }
 }

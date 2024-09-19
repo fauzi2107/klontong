@@ -1,5 +1,7 @@
 import 'package:klontong/core/ext/string_ext.dart';
+import 'package:klontong/core/widgets/my_dialog.dart';
 import 'package:klontong/features/form/presentation/bloc/form_cubit.dart';
+import 'package:klontong/features/home/domain/usecase/add_product_usecase.dart';
 
 import '../../../../ui_export.dart';
 
@@ -43,8 +45,21 @@ class _FormScreenState extends FormProductState<FormScreen> {
         ],
       ),
       body: BlocProvider(
-        create: (_) => FormCubit(),
-        child: BlocBuilder<FormCubit, bool>(
+        create: (_) => FormCubit(AddProductUsecase(ProductReposImpl())),
+        child: BlocConsumer<FormCubit, BaseState>(
+          listener: (context, state) {
+            if (state.isLoading) {
+              showMyLoading(context);
+            } else {
+              popBack(context);
+
+              if ((state.errMsg??'').isNotEmpty) {
+                // todo : show dialog error
+              } else {
+                popBack(context);
+              }
+            }
+          },
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(20),
@@ -98,9 +113,7 @@ class _FormScreenState extends FormProductState<FormScreen> {
                   ),
                   if (!isReadOnly)
                     MaterialButton(
-                      onPressed: isValidate ? () {
-
-                      } : null,
+                      onPressed: isValidate ? () => onSubmit(context) : null,
                       color: Colors.blueAccent,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8)

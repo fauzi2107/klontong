@@ -14,4 +14,13 @@ extension StringExt on String {
         name: useSymbol ? 'Rp ' : ''
     ).format(double.tryParse(this) ?? '');
   }
+
+  /// double value after removing currency or throw exception
+  double get numberOnly {
+    try {
+      return double.tryParse(replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+    } catch (err) {
+      throw Exception('Value unidentified "$this"');
+    }
+  }
 }
