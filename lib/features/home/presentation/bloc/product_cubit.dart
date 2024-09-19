@@ -26,29 +26,38 @@ class ProductCubit extends Cubit<BaseState> {
   Future getProductByName(String productName) async {
     emit(state.copyWith(isLoading: true));
 
+    var items = state.data;
+    if (items.isEmpty) items = dummy;
     emit(state.copyWith(
       isLoading: false,
-      data: productName.isNotEmpty ? dummy.where((e) {
+      search: productName.isNotEmpty ? items.where((e) {
         return e.name.toLowerCase().contains(productName.toLowerCase());
-      }).toList() : dummy
+      }).toList() : []
     ));
   }
 }
 
 class BaseState {
   final bool isLoading;
-  final List<ProductModel> data;
+  final List<ProductModel> data, search;
   final String? errMsg;
 
-  BaseState({required this.isLoading, this.data = const [], this.errMsg});
+  BaseState({
+    required this.isLoading,
+    this.search = const [],
+    this.data = const [],
+    this.errMsg
+  });
 
   BaseState copyWith({
     bool? isLoading,
     List<ProductModel>? data,
+    List<ProductModel>? search,
     String? errMsg
   }) => BaseState(
     isLoading: isLoading ?? this.isLoading,
     data: data ?? this.data,
+    search: search ?? this.search,
     errMsg: errMsg ?? this.errMsg
   );
 }

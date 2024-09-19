@@ -79,7 +79,9 @@ class _HomeScreenState extends HomeState<HomeScreen> {
                       },
                       child: ListItemWidget(
                         isLoading: productState.isLoading,
-                        products: productState.data,
+                        products: productState.search.isEmpty && searchController.text.isEmpty
+                            ? productState.data
+                            : productState.search,
                       ),
                     ),
                   )
