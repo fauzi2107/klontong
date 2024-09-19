@@ -2,7 +2,7 @@ import '../../../../ui_export.dart';
 
 abstract class ProductRepos {
   Future<List<ProductModel>> getProducts();
-  Future addProduct(ProductModel model);
+  Future addProduct(ProductModel model, bool isNew);
 }
 
 class ProductReposImpl implements ProductRepos {
@@ -19,9 +19,15 @@ class ProductReposImpl implements ProductRepos {
   }
 
   @override
-  Future addProduct(ProductModel model) async {
+  Future addProduct(ProductModel model, bool isNew) async {
     try {
-      await Dio().post(ApiUrl.PRODUCTS, data: model.toJson);
+      if (isNew) {
+        await Dio().post(ApiUrl.PRODUCTS, data: model.toJson);
+      } else {
+        await Dio().put('${ApiUrl.PRODUCTS}/${model.productId}',
+          data: model.toJson
+        );
+      }
     } catch (e) {
       throw Exception(e);
     }

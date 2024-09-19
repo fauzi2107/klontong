@@ -33,11 +33,11 @@ abstract class FormProductState<T extends FormScreen> extends State<T> {
 
   onSubmit(BuildContext context) async {
     context.read<FormCubit>().onSubmit(ProductModel(
-      productId: '',
+      productId: widget.data?.productId ?? '',
       name: nameController.text,
       categoryName: categoryController.text,
       description: descController.text,
       harga: priceController.text.numberOnly.toInt()
-    ));
+    ), widget.data == null);
   }
 }

@@ -6,10 +6,13 @@ class FormCubit extends Cubit<BaseState> {
 
   final AddProductUsecase _addProductUsecase;
 
-  Future onSubmit(ProductModel model) async {
+  Future onSubmit(ProductModel model, bool isNew) async {
     emit(state.copyWith(isLoading: true));
 
-    final result = await _addProductUsecase(model);
+    final result = await _addProductUsecase(AddProductParams(
+      data: model,
+      isNew: isNew
+    ));
     result.when(ok: (data) {
       emit(BaseState(isLoading: false));
     }, err: (err) {
